@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class App {
 
     public static void meny(){
-        System.out.println("Välkommen till Gabbi Airlines! Skriv 1, 2, 3 eller 4"); //Meny
+        System.out.println("Välkommen till Gabbi Airlines! Skriv 1, 2, 3, 4, 5, 6 eller 7"); //Meny
         System.out.println("1:Boka en plats på flyget");
         System.out.println("2:Hjälp eller frågor");
         System.out.println("3:Våra priser");
@@ -16,7 +16,7 @@ public class App {
     }
 
     public static void visaPlatser(int[]platser){
-        int räknare = 0;
+        int räknare = 0; 
 
         for(int i = 0; i < 20; i++){
             if(räknare == 4){
@@ -30,33 +30,43 @@ public class App {
 
     }
 
+
+    //metod för att boka platser
     public static int[] bokaPlats(int[] platser){
+
+        //scanner för denna metod eftersom den vi deklarerade i början inte fungerar i metoden eftersom den är utanför
         Scanner reader = new Scanner(System.in); // Scanner
-        
         visaPlatser(platser);
+
+        //tar input från använmdaren
         System.out.print("\nVilken plats på planet vill du ha? (1-20): ");
-        
         while(true){
-            int valdPlats = Integer.parseInt(reader.nextLine())-1;
+            //loop där man kollar om platsen är ledig, om den är ledig får användaren platsen
+            //annars måste användaren försöka igen 
+            int valdPlats = Integer.parseInt(reader.nextLine())-1; //den plats som användaren väljer
             if(platser[valdPlats] == 0){
                 platser[valdPlats] = 1;
                 break;
-            }else{
+            }
+            
+            else{
                 System.out.println("Plats nummer " + valdPlats + " är upptagen, vänligen välj en annan plats: ");
             }
         }
-    
+        
+        //skriver ut hur platserna ser ut i planet
         System.out.println("De uppdaterade platserna: ");
         visaPlatser(platser);
-
-        return platser;
+        
+        
+        return platser; 
     }
 
-
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     public static void main(String[] args) throws Exception {
         System.out.println("Hello, World!");
         Scanner reader = new Scanner(System.in); // Scanner
-        int[] platser = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,};
+        int[] platser = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,}; //array
         boolean loop = true;
 
         while(loop){
@@ -64,7 +74,10 @@ public class App {
             String menysvar = reader.nextLine();
             switch(menysvar){
                 case "1":
-                    System.out.println("huvudprogram");
+                    Scanner ålder = new Scanner(System.in);
+                    System.out.println("Hur gammal är du?");
+                    ålder.nextLine();
+
                     platser = bokaPlats(platser);
                     System.out.println("Tryck enter för att fortsätta");
                     reader.nextLine();
@@ -98,6 +111,14 @@ public class App {
 
                 case "6":
                     int vinst = 0;
+                
+                    if(ålder>= 18){
+                        vinst = 300;
+                    }
+                    else{
+                        vinst = 150;
+                    }
+
                     for (int plats : platser) {
                         if(plats == 1){
                             vinst+=300;
@@ -112,10 +133,12 @@ public class App {
                     System.out.println("Programmet avslutas");
                     loop = false;
                 break;
+
+
+                reader.close();
+                ålder.close();
+                // menysvar.close();
             }
         }
-
-        
-
     }      
 }  
