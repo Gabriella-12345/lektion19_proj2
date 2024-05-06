@@ -2,7 +2,7 @@
 // Bokningssystem för ett flygplan
 import java.util.Scanner;
 
-public class App {
+public class test2 {
 
     public static void meny(){
         System.out.println("Välkommen till Gabbi Airlines! Skriv 1, 2, 3, 4, 5, 6 eller 7"); //Meny
@@ -15,15 +15,32 @@ public class App {
         System.out.println("7:Avsluta programmet");
     }
 
+    public static void Räknautvinst(int[]platser, int ålder){
+        int vinst = 0;
+
+        for (int plats : platser) {
+            if(plats == 1){
+
+                if(ålder >= 18){
+                    vinst = 300;
+                }
+                else{
+                    vinst = 150;
+                }
+            }
+        }
+        System.out.println("Din vinst är: " + vinst + "kr");
+    }
+    
     public static void visaPlatser(int[]platser){
         int räknare = 0; 
 
         for(int i = 0; i < 20; i++){
-            if(räknare == 4){
+            if(räknare == 4){  // Gör så att varje kolumn består av 4 rader
                 System.out.println("");
                 räknare = 0;
             }
-            System.out.print(platser[i]);
+            System.out.print(platser[i]); 
             räknare++;
         }
         System.out.println("");
@@ -52,20 +69,23 @@ public class App {
             else{
                 System.out.println("Plats nummer " + valdPlats + " är upptagen, vänligen välj en annan plats: ");
             }
+            reader.close();
         }
         
         //skriver ut hur platserna ser ut i planet
         System.out.println("De uppdaterade platserna: ");
         visaPlatser(platser);
         
-        
-        return platser; 
-    }
+        return platser;
 
+        
+    }
+    
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     public static void main(String[] args) throws Exception {
         System.out.println("Hello, World!");
         Scanner reader = new Scanner(System.in); // Scanner
+
         int[] platser = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,}; //array
         boolean loop = true;
 
@@ -74,10 +94,11 @@ public class App {
             String menysvar = reader.nextLine();
             switch(menysvar){
                 case "1":
-                    Scanner ålder = new Scanner(System.in);
-                    System.out.println("Hur gammal är du?");
-                    ålder.nextLine();
 
+                System.out.println("Hur gammal är du?");
+                reader.nextInt();
+                int ålder = reader.nextInt();
+        
                     platser = bokaPlats(platser);
                     System.out.println("Tryck enter för att fortsätta");
                     reader.nextLine();
@@ -111,34 +132,18 @@ public class App {
 
                 case "6":
                     int vinst = 0;
-                
-                    if(ålder>= 18){
-                        vinst = 300;
-                    }
-                    else{
-                        vinst = 150;
-                    }
-
-                    for (int plats : platser) {
-                        if(plats == 1){
-                            vinst+=300;
-                        }
-                    }
+                    Räknautvinst();
                     System.out.println("Din vinst är: " + vinst + "kr");
                     System.out.println("Tryck enter för att fortsätta");
                     reader.nextLine();
                 break;
     
-                case "7":
-                    System.out.println("Programmet avslutas");
-                    loop = false;
-                break;
-
-
-                reader.close();
-                ålder.close();
                 // menysvar.close();
             }
+            System.out.println("programet avslutas");
+            loop = false;
         }
+
+        reader.close();
     }      
 }  
